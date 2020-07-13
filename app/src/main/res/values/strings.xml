@@ -10,4 +10,12 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="preferences_file_name">FoodApp</string>
+    <string name="faqs_fragment">FAQs Fragment</string>
+    <string name="favourite_fragment">Favourite Fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="log_out_fragment">Log Out Fragment</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="open_drawer">open drawer</string>
+    <string name="close_drawer">close drawer</string>
+
 </resources>
