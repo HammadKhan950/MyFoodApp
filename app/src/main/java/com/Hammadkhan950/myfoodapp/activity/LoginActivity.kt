@@ -1,16 +1,14 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_login.*
+import com.Hammadkhan950.myfoodapp.R
 
 class LoginActivity : AppCompatActivity() {
     lateinit var etMobile: EditText

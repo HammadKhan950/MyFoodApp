@@ -1,19 +1,20 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.Hammadkhan950.myfoodapp.R
 
 
-class HomeFragment : Fragment() {
+class FavouriteFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home_fragement, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_favourite, container, false)
     }
+
 }

@@ -1,12 +1,13 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.Hammadkhan950.myfoodapp.R
 
-class LogoutFragment : Fragment() {
+class FAQsFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -14,7 +15,8 @@ class LogoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_logout, container, false)
+        return inflater.inflate(R.layout.fragment_f_a_qs, container, false)
     }
+
 
 }

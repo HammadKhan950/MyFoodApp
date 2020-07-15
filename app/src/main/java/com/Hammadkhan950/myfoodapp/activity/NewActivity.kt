@@ -1,18 +1,19 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.activity
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.Hammadkhan950.myfoodapp.fragment.ProfileFragment
+import com.Hammadkhan950.myfoodapp.R
+import com.Hammadkhan950.myfoodapp.fragment.FAQsFragment
+import com.Hammadkhan950.myfoodapp.fragment.FavouriteFragment
+import com.Hammadkhan950.myfoodapp.fragment.HomeFragment
+import com.Hammadkhan950.myfoodapp.fragment.LogoutFragment
 import com.google.android.material.navigation.NavigationView
 
 class NewActivity : AppCompatActivity() {
@@ -65,7 +66,7 @@ class NewActivity : AppCompatActivity() {
                R.id.home -> {
                    openDashboard()
                }
-               R.id.favouriteRestaurants-> {
+               R.id.favouriteRestaurants -> {
                    supportFragmentManager.beginTransaction()
                        .replace(
                            R.id.frameLayout,
@@ -91,7 +92,7 @@ class NewActivity : AppCompatActivity() {
                    supportFragmentManager.beginTransaction()
                        .replace(
                            R.id.frameLayout,
-                          FAQsFragment()
+                           FAQsFragment()
                        )
                        .commit()
                    supportActionBar?.title="About"

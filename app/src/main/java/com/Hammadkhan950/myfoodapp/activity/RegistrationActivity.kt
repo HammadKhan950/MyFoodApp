@@ -1,10 +1,11 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.Hammadkhan950.myfoodapp.R
 
 class RegistrationActivity : AppCompatActivity() {
     lateinit var etProfile:EditText
@@ -32,7 +33,7 @@ class RegistrationActivity : AppCompatActivity() {
             val mobileNumber = etMobile.text.toString()
             val password = etPassword.text.toString()
             val confirmPassword=etConfirmPassword.text.toString()
-            val intent=Intent(this,ViewActivity::class.java)
+            val intent=Intent(this, ViewActivity::class.java)
             intent.putExtra("profile",profile)
             intent.putExtra("email",email)
             intent.putExtra("address",address)

@@ -1,10 +1,11 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.Hammadkhan950.myfoodapp.R
 
 class ForgotPasswordActivity : AppCompatActivity() {
     lateinit var etMobile:EditText

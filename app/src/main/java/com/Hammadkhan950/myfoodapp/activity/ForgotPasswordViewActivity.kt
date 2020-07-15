@@ -1,8 +1,9 @@
-package com.Hammadkhan950.myfoodapp
+package com.Hammadkhan950.myfoodapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import com.Hammadkhan950.myfoodapp.R
 
 class ForgotPasswordViewActivity : AppCompatActivity() {
     lateinit var tvEmail: TextView
