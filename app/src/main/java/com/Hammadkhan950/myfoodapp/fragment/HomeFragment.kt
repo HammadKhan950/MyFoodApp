@@ -22,8 +22,11 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.Hammadkhan950.myfoodapp.R
 import com.Hammadkhan950.myfoodapp.adapter.HomeRecyclerAdapter
+import com.Hammadkhan950.myfoodapp.database.DishDatabase
+import com.Hammadkhan950.myfoodapp.database.DishEntity
 import com.Hammadkhan950.myfoodapp.model.Dish
 import com.Hammadkhan950.myfoodapp.util.ConnectionManager
 import com.android.volley.Request
@@ -52,7 +55,7 @@ class HomeFragment : Fragment() {
         recyclerViewHome = view.findViewById(R.id.homeRecyclerView)
         progressBar = view.findViewById(R.id.progressBar)
         progressLayout = view.findViewById(R.id.progressLayout)
-        progressLayout.visibility=View.VISIBLE
+        progressLayout.visibility = View.VISIBLE
 
         val queue = Volley.newRequestQueue(activity as Context)
         val url = "http://13.235.250.119/v2/restaurants/fetch_result/"
@@ -61,7 +64,7 @@ class HomeFragment : Fragment() {
             val jsonObjectRequest =
                 object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                     try {
-                        progressLayout.visibility=View.GONE
+                        progressLayout.visibility = View.GONE
                         val data = it.getJSONObject("data")
                         val success = data.getBoolean("success")
                         Log.i("Message", success.toString())
@@ -70,11 +73,13 @@ class HomeFragment : Fragment() {
                             for (i in 0 until dishData.length()) {
                                 val dishJsonObject = dishData.getJSONObject(i)
                                 val dishObject = Dish(
+                                    dishJsonObject.getString("id"),
                                     dishJsonObject.getString("name"),
                                     dishJsonObject.getString("rating"),
                                     dishJsonObject.getString("cost_for_one"),
                                     dishJsonObject.getString("image_url")
                                 )
+
                                 dishInfoList.add(dishObject)
 
                                 recyclerAdapter =
@@ -101,8 +106,14 @@ class HomeFragment : Fragment() {
 
                 }, Response.ErrorListener {
 
-                    Toast.makeText(activity as Context, "Some error occurred", Toast.LENGTH_LONG)
-                        .show()
+                    if (activity != null) {
+                        Toast.makeText(
+                            activity as Context,
+                            "Some error occurred",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
 
                 }) {
                     override fun getHeaders(): MutableMap<String, String> {
@@ -134,4 +145,32 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    class DbAsyncTask(val context: Context, val dishEntity: DishEntity, val mode: Int) :
+        AsyncTask<Void, Void, Boolean>() {
+        val db = Room.databaseBuilder(context, DishDatabase::class.java, "dishes-db").build()
+        override fun doInBackground(vararg params: Void?): Boolean {
+            when (mode) {
+                1 -> {
+                    val dish: DishEntity? = db.dishDao().getDishById(dishEntity.id.toString())
+                    db.close()
+                    return dish != null
+
+                }
+                2 -> {
+                    db.dishDao().insertDish(dishEntity)
+                    db.close()
+                    return true
+
+                }
+                3 -> {
+                    db.dishDao().deleteDish(dishEntity)
+                    db.close()
+                    return true
+                }
+            }
+
+            return false
+        }
+
+    }
 }

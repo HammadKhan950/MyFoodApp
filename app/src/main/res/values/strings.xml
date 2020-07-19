@@ -17,5 +17,7 @@
     <string name="profile_fragment">Profile Fragment</string>
     <string name="open_drawer">open drawer</string>
     <string name="close_drawer">close drawer</string>
-
+    <string name="question">heyyy /n this</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragment.FAQsFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/faqs_fragment"
-        android:id="@+id/txtFaq"
-        android:padding="10dp"
-        android:textSize="20sp"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerViewQuestions"
+        android:layout_margin="10dp"/>
 
 </FrameLayout>

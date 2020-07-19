@@ -2,84 +2,85 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/appcolor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appcolor"
     tools:context=".activity.LoginActivity">
+
     <ImageView
         android:id="@+id/imgLogin"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:src="@drawable/order"
-        android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/order" />
+
     <EditText
         android:id="@+id/etmobile"
-        android:layout_below="@id/imgLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:layout_below="@id/imgLogin"
+        android:layout_margin="20dp"
+        android:layout_marginTop="50dp"
+        android:background="#FFFFFF"
+        android:drawableStart="@drawable/ic_phone"
         android:hint="Mobile Number(10 digits)"
+        android:inputType="number"
         android:maxLength="10"
         android:maxLines="1"
-        android:layout_marginTop="50dp"
-        android:layout_margin="20dp"
-        android:background="#FFFFFF"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_phone"
-        />
+        android:padding="10dp" />
+
     <EditText
-    android:id="@+id/etpassword"
-    android:layout_below="@id/etmobile"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPassword"
-    android:hint="Password"
-    android:maxLines="1"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginTop="10dp"
-    android:background="#FFFFFF"
-    android:padding="10dp"
-    android:drawableStart="@drawable/ic_password"
-    />
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_below="@id/etpassword"
+        android:id="@+id/etpassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/etmobile"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FFFFFF"
+        android:drawableStart="@drawable/ic_password"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etpassword"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/colorPrimaryDark"
         android:padding="10dp"
         android:text="Login"
-        android:textSize="20sp"
-        android:background="@color/colorPrimaryDark"
-        />
+        android:textSize="20sp" />
+
     <TextView
         android:id="@+id/tvforgotpassword"
-        android:layout_below="@id/btnlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Forgot password?"
-        android:layout_gravity="center"
+        android:layout_below="@id/btnlogin"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Forgot password?" />
+
     <TextView
         android:id="@+id/tvSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account?Sign up now"
-        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
+        android:text="Don't have an account?Sign up now"
 
         />
-
-
 
 
 </RelativeLayout>
