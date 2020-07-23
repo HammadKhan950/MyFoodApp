@@ -2,8 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-
-
         <item
             android:id="@+id/home"
             android:icon="@drawable/ic_home"
@@ -17,13 +15,18 @@
             android:icon="@drawable/ic_favrestaurants"
             android:title="Favourite Restaurants" />
         <item
+            android:id="@+id/orderHistory"
+            android:icon="@drawable/ic_history"
+            android:title="Order History" />
+
+        <item
             android:id="@+id/faqs"
             android:icon="@drawable/ic_faqs"
             android:title="FAQs" />
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout"
-            android:title="Log out" />
+            android:title="Log Out" />
 
 
     </group>

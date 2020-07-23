@@ -8,10 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import com.Hammadkhan950.myfoodapp.R
 import com.Hammadkhan950.myfoodapp.util.ConnectionManager
@@ -27,29 +25,32 @@ class LoginActivity : AppCompatActivity() {
     lateinit var tvForgotPassword: TextView
     lateinit var tvSignUp: TextView
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var toolbar: Toolbar
+    var userId:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        title = "Log in page"
         etMobile = findViewById(R.id.etmobile)
         etPassword = findViewById(R.id.etpassword)
         btnLogin = findViewById(R.id.btnlogin)
         tvForgotPassword = findViewById(R.id.tvforgotpassword)
         tvSignUp = findViewById(R.id.tvSignup)
+        toolbar=findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "  Log in Here"
         sharedPreferences =
             getSharedPreferences(getString(R.string.preferences_file_name), Context.MODE_PRIVATE)
 
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         if (isLoggedIn) {
-            val intent = Intent(this, NewActivity::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
             finish()
         }
         btnLogin.setOnClickListener {
             val mobileNumber = etMobile.text.toString()
             val password = etPassword.text.toString()
-            savePreferences(mobileNumber, password)
             if (mobileNumber.length != 10) {
                 Toast.makeText(this, "Enter correct 10 digit mobile number", Toast.LENGTH_SHORT)
                     .show()
@@ -66,9 +67,16 @@ class LoginActivity : AppCompatActivity() {
                         Response.Listener {
                             val data = it.getJSONObject("data")
                             val success = data.getBoolean("success")
-                            Log.i("Message", success.toString())
                             if (success) {
-                                val intent = Intent(this, NewActivity::class.java)
+                                val dishJsonObject = data.getJSONObject("data")
+                                userId=dishJsonObject.getString("user_id")
+                                savePreferences(mobileNumber, password,userId)
+                                Toast.makeText(
+                                    this,
+                                    userId,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(this, DashboardActivity::class.java)
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(
@@ -79,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                         }, Response.ErrorListener {
-                            Toast.makeText(this, "Some error occured!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Some error occurred!", Toast.LENGTH_SHORT).show()
                         }) {
 
                         override fun getHeaders(): MutableMap<String, String> {
@@ -93,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     val dialog = AlertDialog.Builder(this)
                     dialog.setTitle("Error")
-                    dialog.setMessage("Internet Connection is not Found")
+                    dialog.setMessage("Internet connection is not Found")
                     dialog.setPositiveButton("Open Settings") { text, listener ->
                         val settingIntent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
                         startActivity(settingIntent)
@@ -120,10 +128,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun savePreferences(mobileNumber: String, password: String) {
+    fun savePreferences(mobileNumber: String, password: String,userId:String) {
         sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
         sharedPreferences.edit().putString("MobileNumber", mobileNumber).apply()
         sharedPreferences.edit().putString("Password", password).apply()
+        sharedPreferences.edit().putString("userID",userId).apply()
     }
 
     override fun onBackPressed() {

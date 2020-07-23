@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.os.Handler
 import com.Hammadkhan950.myfoodapp.R
 
-class MainActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_splash)
         Handler().postDelayed({
             val startAct=Intent(this,
                 LoginActivity::class.java)
             startActivity(startAct)
-        },2000)
+        },1000)
     }
 }

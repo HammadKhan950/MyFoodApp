@@ -5,13 +5,18 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.Hammadkhan950.myfoodapp.fragment.OrderHistoryFragment
 import com.Hammadkhan950.myfoodapp.fragment.ProfileFragment
 import com.Hammadkhan950.myfoodapp.R
 import com.Hammadkhan950.myfoodapp.fragment.FAQsFragment
@@ -19,7 +24,7 @@ import com.Hammadkhan950.myfoodapp.fragment.FavouriteFragment
 import com.Hammadkhan950.myfoodapp.fragment.HomeFragment
 import com.google.android.material.navigation.NavigationView
 
-class NewActivity : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity() {
 
 
     lateinit var drawerLayout: DrawerLayout
@@ -28,21 +33,31 @@ class NewActivity : AppCompatActivity() {
     lateinit var navigationView: NavigationView
     lateinit var toolbar: androidx.appcompat.widget.Toolbar
     var previousMenuItem: MenuItem? = null
+    lateinit var sharedPrefs: SharedPreferences
 
-     lateinit var sharedPreferences: SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new)
-        sharedPreferences=getSharedPreferences(getString(R.string.preferences_file_name), Context.MODE_PRIVATE)
-//        val mobileNumber = sharedPreferences.getString("MobileNumber", 100.toString())
-//        val password = sharedPreferences.getString("Password","")
-
-
+        setContentView(R.layout.activity_dashboard)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preferences_file_name), Context.MODE_PRIVATE)
+        sharedPrefs = getSharedPreferences("Registration", Context.MODE_PRIVATE)
         drawerLayout = findViewById(R.id.drawerLayout)
         coordinatorLayout = findViewById(R.id.coordinatorLayout)
         frameLayout = findViewById(R.id.frameLayout)
         navigationView = findViewById(R.id.navigationView)
         toolbar = findViewById(R.id.toolbar)
+
+
+        val convertView =
+            LayoutInflater.from(this@DashboardActivity).inflate(R.layout.drawer_header, null)
+        val userName: TextView = convertView.findViewById(R.id.txtDrawerText)
+        val mobileNumber: TextView = convertView.findViewById(R.id.txtDrawerMobile)
+        userName.text = sharedPrefs.getString("name", null)
+        mobileNumber.text = sharedPrefs.getString("mobileNumber", null)
+        navigationView.addHeaderView(convertView)
+
+
         setUpToolbar()
         openDashboard()
         val actionBarDrawerToggle =
@@ -68,6 +83,7 @@ class NewActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> {
                     openDashboard()
+                    drawerLayout.closeDrawers()
                 }
                 R.id.favouriteRestaurants -> {
                     supportFragmentManager.beginTransaction()
@@ -102,13 +118,23 @@ class NewActivity : AppCompatActivity() {
                     drawerLayout.closeDrawers()
 
                 }
+                R.id.orderHistory -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.frameLayout,
+                            OrderHistoryFragment()
+                        )
+                        .commit()
+                    supportActionBar?.title = "My Previous Orders"
+                    drawerLayout.closeDrawers()
+                }
                 R.id.logout -> {
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle("Confirmation")
                         .setMessage("Are you sure you want exit?")
                         .setPositiveButton("Yes") { _, _ ->
                             sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
-                            val intent= Intent(this,LoginActivity::class.java)
+                            val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
                         .setNegativeButton("No") { _, _ ->
@@ -124,6 +150,7 @@ class NewActivity : AppCompatActivity() {
         }
 
     }
+
 
     fun setUpToolbar() {
         setSupportActionBar(toolbar)
@@ -162,7 +189,6 @@ class NewActivity : AppCompatActivity() {
 
             else -> super.onBackPressed()
         }
-
 
     }
 

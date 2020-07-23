@@ -60,14 +60,12 @@ class HomeFragment : Fragment() {
         val queue = Volley.newRequestQueue(activity as Context)
         val url = "http://13.235.250.119/v2/restaurants/fetch_result/"
 
-        if (ConnectionManager().checkConnectivity(activity as Context)) {
             val jsonObjectRequest =
                 object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                     try {
                         progressLayout.visibility = View.GONE
                         val data = it.getJSONObject("data")
                         val success = data.getBoolean("success")
-                        Log.i("Message", success.toString())
                         if (success) {
                             val dishData = data.getJSONArray("data")
                             for (i in 0 until dishData.length()) {
@@ -82,24 +80,26 @@ class HomeFragment : Fragment() {
 
                                 dishInfoList.add(dishObject)
 
-                                recyclerAdapter =
-                                    HomeRecyclerAdapter(activity as Context, dishInfoList)
-                                recyclerViewHome.adapter = recyclerAdapter
-                                recyclerViewHome.layoutManager = layoutManager
+                                if(activity!=null) {
+                                    recyclerAdapter =
+                                        HomeRecyclerAdapter(activity as Context, dishInfoList)
+                                    recyclerViewHome.adapter = recyclerAdapter
+                                    recyclerViewHome.layoutManager = layoutManager
+                                }
                             }
 
                         } else {
                             Toast.makeText(
                                 activity as Context,
-                                "some error occurred",
-                                Toast.LENGTH_LONG
+                                "some error occurred!",
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                     } catch (e: JSONException) {
                         Toast.makeText(
                             activity as Context,
-                            "Some error occurred",
-                            Toast.LENGTH_LONG
+                            "Some error occurred!",
+                            Toast.LENGTH_SHORT
                         ).show()
 
                     }
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
                         Toast.makeText(
                             activity as Context,
                             "Some error occurred",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         )
                             .show()
                     }
@@ -124,24 +124,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             queue.add(jsonObjectRequest)
-
-        } else {
-
-            val diadlog = AlertDialog.Builder(activity as Context)
-            diadlog.setTitle("Error")
-            diadlog.setMessage("Internet Connection is not found")
-            diadlog.setPositiveButton("Open Settings") { text, listener ->
-                val settingIntent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
-                startActivity(settingIntent)
-                activity?.finish()
-            }
-            diadlog.setNegativeButton("Exit") { text, listener ->
-
-                ActivityCompat.finishAffinity(activity as Activity)
-            }
-            diadlog.create()
-            diadlog.show()
-        }
         return view
     }
 
@@ -151,7 +133,7 @@ class HomeFragment : Fragment() {
         override fun doInBackground(vararg params: Void?): Boolean {
             when (mode) {
                 1 -> {
-                    val dish: DishEntity? = db.dishDao().getDishById(dishEntity.id.toString())
+                    val dish: DishEntity? = db.dishDao().getDishById(dishEntity.id)
                     db.close()
                     return dish != null
 

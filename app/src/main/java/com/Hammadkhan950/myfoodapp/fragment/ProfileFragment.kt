@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.Hammadkhan950.myfoodapp.R
 import org.w3c.dom.Text
 
@@ -38,7 +39,6 @@ class ProfileFragment : Fragment() {
         txtProfileNumber.text = mobileNumber
         txtProfileEmail.text = email
         txtProfileAddress.text =address
-
 
         return view
     }
